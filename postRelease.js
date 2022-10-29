@@ -39,7 +39,12 @@ const postRelease = async () => {
     console.log('response-yes',responce)
   }
 
-  const releaseAuthor = responce.at(-1).commit.author.name;
+  let releaseAuthor;
+  if(!prevTag) {
+    releaseAuthor = responce[0].author.login;
+  } else {
+    releaseAuthor = responce.at(-1).author.login;
+  }
   const releaseVersion = curTag.split("/").at(-1);
   const date = new Date();
   const releaseDate = `${
