@@ -1,11 +1,12 @@
 /* eslint-disable*/
-// !
+// git tag rc-0.0.*
+// git push origin rc-0.1.*
 const axios = require("axios");
 
 let { GITHUB_TOKEN, OAUTH_TOKEN, ORG_ID, tag_name } = process.env;
 let curTag = tag_name;
 
-const repositoryUrl = "https://api.github.com/repos/lebusiness/infra-test-last";
+const repositoryUrl = "https://api.github.com/repos/lebusiness/infra-template";
 const headersGit = {
   headers: { Authorization: GITHUB_TOKEN },
 };
