@@ -1,0 +1,34 @@
+name: release
+run-name: ${{ github.actor }} is releasing 🚀
+on: 
+  push:
+    tags:
+      - "rc-*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.16.0]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: npm ci
+      - run: npm test
+      - run: npm run ts
+      - run: npm run lint
+      - run: node postRelease.js
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }} 
+          ORG_ID: ${{ secrets.ORG_ID }}
+          tag_name: ${{ github.ref }}
+      - uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
