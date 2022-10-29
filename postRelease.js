@@ -29,12 +29,14 @@ const postRelease = async () => {
   if (!prevTag) {
     responce = await axios.get(repositoryUrl + "/commits", headersGit);
     responce = responce.data;
+    console.log('response-not',responce)
   } else {
     responce = await axios.get(
       repositoryUrl + `/compare/${prevTag.data.tag_name}...${curTag}`,
       headersGit
     );
     responce = responce.data.commits;
+    console.log('response-yes',responce)
   }
 
   const releaseAuthor = responce.at(-1).author.login;
