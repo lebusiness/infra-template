@@ -45,6 +45,11 @@ jobs:
 
       - name: Post release  
         run: node postRelease.js
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }} 
+          ORG_ID: ${{ secrets.ORG_ID }}
+          tag_name: ${{ github.ref }}
 
       - name: Build project  
         run: npm run build
