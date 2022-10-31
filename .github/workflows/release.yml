@@ -24,7 +24,7 @@ jobs:
         run: npm test
         run: npm run ts
         run: npm run lint
-        name: create release
+      - name: create release
         uses: actions/create-release@v1
         with:
           tag_name: ${{ github.ref }}
