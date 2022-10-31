@@ -32,3 +32,9 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+      - run: docker login -u $DOCK_NAME -p $DOCK_PASSWORD
+      - run: docker build ./
+      - run: docker push ./
+        env:    
+          DOCK_NAME: ${{ secrets.DOCK_NAME }}
+          DOCK_PASSWORD: ${{ secrets.DOCK_PASSWORD }}

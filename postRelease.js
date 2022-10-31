@@ -25,22 +25,21 @@ const postRelease = async () => {
   } catch {
     prevTag = null;
   }
-
+  console.log('prev-tag: ', prevTag);
   let responce;
 
   if (!prevTag) {
     responce = await axios.get(repositoryUrl + "/commits", headersGit);
     responce = responce.data;
-    console.log("response-not", responce);
+    console.log("all commits", responce);
   } else {
     responce = await axios.get(
       repositoryUrl + `/compare/${prevTag.data.tag_name}...${curTag}`,
       headersGit
     );
     responce = responce.data.commits;
-    console.log("response-yes", responce);
+    console.log("after last release commits", responce);
   }
-
   let releaseAuthor;
   if (!prevTag) {
     releaseAuthor = responce[0].author.login;
@@ -51,7 +50,7 @@ const postRelease = async () => {
   const releaseVersion = curTag.split("/").at(-1);
   const date = new Date();
   const releaseDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-
+  console.log(releaseVersion, releaseDate);
   let result = `Ответственный за релиз: ${releaseAuthor}\n Коммиты, попавшие в релиз:\n`;
   responce.forEach((commit) => {
     result += `${commit.sha} ${commit.commit.author.name} ${commit.commit.message}\n`;
