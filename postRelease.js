@@ -69,7 +69,7 @@ const postRelease = async () => {
     method: "post",
     headers: headersTracker,
     data: {
-      test: `Собрали образ в тегом ${curTag}`
+      text: `Собрали образ в тегом ${curTag}`
     },
   });
 };
