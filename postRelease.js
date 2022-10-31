@@ -1,7 +1,7 @@
 /* eslint-disable*/
-// !
 // git tag rc-0.0.*
 // git push origin rc-0.1.*
+
 const axios = require("axios");
 
 let { GITHUB_TOKEN, OAUTH_TOKEN, ORG_ID, tag_name } = process.env;
@@ -30,27 +30,26 @@ const postRelease = async () => {
   if (!prevTag) {
     responce = await axios.get(repositoryUrl + "/commits", headersGit);
     responce = responce.data;
-    console.log('response-not',responce)
+    console.log("response-not", responce);
   } else {
     responce = await axios.get(
       repositoryUrl + `/compare/${prevTag.data.tag_name}...${curTag}`,
       headersGit
     );
     responce = responce.data.commits;
-    console.log('response-yes',responce)
+    console.log("response-yes", responce);
   }
 
   let releaseAuthor;
-  if(!prevTag) {
+  if (!prevTag) {
     releaseAuthor = responce[0].author.login;
   } else {
     releaseAuthor = responce.at(-1).author.login;
   }
+
   const releaseVersion = curTag.split("/").at(-1);
   const date = new Date();
-  const releaseDate = `${
-    date.getMonth() + 1
-  }/${date.getDate()}/${date.getFullYear()}`;
+  const releaseDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 
   let result = `Ответственный за релиз: ${releaseAuthor}\n Коммиты, попавшие в релиз:\n`;
   responce.forEach((commit) => {
