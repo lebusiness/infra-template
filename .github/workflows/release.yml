@@ -18,12 +18,15 @@ jobs:
       - run: npm test
       - run: npm run ts
       - run: npm run lint
+      - run: node postRelease.js
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
           OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }} 
           ORG_ID: ${{ secrets.ORG_ID }}
           tag_name: ${{ github.ref }}
       - uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
@@ -31,5 +34,4 @@ jobs:
           prerelease: false
 
         - run: npm run build
-        - run: docker build . --file Dockerfile --tag ${{ github.ref }}
-        - run: node postRelease.js
+        - run: docker build . --file Dockerfile --tag ${{github.ref}}
