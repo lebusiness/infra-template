@@ -17,9 +17,13 @@ jobs:
       matrix:
         node-version: [16.16.0]
     steps:
-      - name: test  
+      - name: checkout
         uses: actions/checkout@v3
+
+      - name: setup-node
         uses: actions/setup-node@v3
+
+      - name: tests  
         run: npm ci
         run: npm test
         run: npm run ts
