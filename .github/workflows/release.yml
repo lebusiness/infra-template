@@ -17,16 +17,22 @@ jobs:
       matrix:
         node-version: [16.16.0]
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: setup-node
+      - name: Setup-node
         uses: actions/setup-node@v3
 
-      - name: tests  
+      - name: Install dependencies  
         run: npm ci
+
+      - name: Unit tests    
         run: npm test
+
+      - name: TS tests      
         run: npm run ts
+
+      - name: Lint tests   
         run: npm run lint
 
       - name: create release
@@ -40,6 +46,8 @@ jobs:
       - name: post release  
         run: node postRelease.js
 
-      - name: create docker instanse  
+      - name: Build project  
         run: npm run build
+
+      - name: create docker instanse  
         run: docker build . --file Dockerfile --tag ${{github.ref_name}}
