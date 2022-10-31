@@ -32,6 +32,5 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-
-        - run: npm run build
-        - run: docker build . --file Dockerfile --tag ${{github.ref}}
+      - run: npm run build
+      - run: docker build . --file Dockerfile --tag ${{github.ref_name}}
