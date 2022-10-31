@@ -35,7 +35,7 @@ jobs:
       - name: Lint tests   
         run: npm run lint
 
-      - name: create release
+      - name: Create release
         uses: actions/create-release@v1
         with:
           tag_name: ${{ github.ref }}
@@ -43,7 +43,7 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: post release  
+      - name: Post release  
         run: node postRelease.js
 
       - name: Build project  
