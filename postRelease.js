@@ -64,6 +64,14 @@ const postRelease = async () => {
       description: result,
     },
   });
+
+  axios("https://api.tracker.yandex.net/v2/issues/HOMEWORKSHRI-185/comments", {
+    method: "post",
+    headers: headersTracker,
+    data: {
+      test: `Собрали образ в тегом ${curTag}`
+    },
+  });
 };
 
 postRelease();
