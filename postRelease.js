@@ -25,12 +25,12 @@ const postRelease = async () => {
   } catch {
     prevTag = null;
   }
-  console.log('prev-tag: ', prevTag);
   let responce;
 
   if (!prevTag) {
     responce = await axios.get(repositoryUrl + "/commits", headersGit);
     responce = responce.data;
+    console.log('prev-tag: ', null);
     console.log("all commits", responce);
   } else {
     responce = await axios.get(
@@ -38,6 +38,7 @@ const postRelease = async () => {
       headersGit
     );
     responce = responce.data.commits;
+    console.log('prev-tag: ', prevTag.data.tag_name);
     console.log("after last release commits", responce);
   }
   let releaseAuthor;
